@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Usuario {
+  id           Int      @id @default(autoincrement())
+  nomeCompleto String
+  email        String   @unique
+  senhaHash    String
+  dataCadastro DateTime @default(now())
+
+  cursos      Curso[]
+  matriculas  Matricula[]
+  progressos  ProgressoAula[]
+  avaliacoes  Avaliacao[]
+  assinaturas Assinatura[]
+  certificados Certificado[]
+}
+
+model Categoria {
+  id        Int     @id @default(autoincrement())
+  nome      String  @unique
+  descricao String?
+
+  cursos  Curso[]
+  trilhas Trilha[]
+}
+
+model Curso {
+  id             Int      @id @default(autoincrement())
+  titulo         String
+  descricao      String?
+  nivel          String
+  dataPublicacao DateTime @default(now())
+  totalAulas     Int      @default(0)
+  totalHoras     Int      @default(0)
+
+  idInstrutor Int
+  idCategoria Int
+
+  instrutor  Usuario   @relation(fields: [idInstrutor], references: [id])
+  categoria  Categoria @relation(fields: [idCategoria], references: [id])
+
+  modulos      Modulo[]
+  matriculas   Matricula[]
+  avaliacoes   Avaliacao[]
+  certificados Certificado[]
+  trilhas      TrilhaCurso[]
+}
+
+model Modulo {
+  id      Int    @id @default(autoincrement())
+  titulo  String
+  ordem   Int
+  idCurso Int
+
+  curso Curso  @relation(fields: [idCurso], references: [id])
+  aulas Aula[]
+}
+
+model Aula {
+  id             Int    @id @default(autoincrement())
+  titulo         String
+  tipoConteudo   String
+  urlConteudo    String?
+  duracaoMinutos Int    @default(0)
+  ordem          Int
+  idModulo       Int
+
+  modulo    Modulo          @relation(fields: [idModulo], references: [id])
+  progressos ProgressoAula[]
+}
+
+model Matricula {
+  id            Int       @id @default(autoincrement())
+  dataMatricula DateTime  @default(now())
+  dataConclusao DateTime?
+  idUsuario     Int
+  idCurso       Int
+
+  usuario Usuario @relation(fields: [idUsuario], references: [id])
+  curso   Curso   @relation(fields: [idCurso], references: [id])
+}
+
+model ProgressoAula {
+  id            Int      @id @default(autoincrement())
+  dataConclusao DateTime @default(now())
+  status        String   @default("Concluído")
+  idUsuario     Int
+  idAula        Int
+
+  usuario Usuario @relation(fields: [idUsuario], references: [id])
+  aula    Aula    @relation(fields: [idAula], references: [id])
+}
+
+model Avaliacao {
+  id            Int      @id @default(autoincrement())
+  nota          Int
+  comentario    String?
+  dataAvaliacao DateTime @default(now())
+  idUsuario     Int
+  idCurso       Int
+
+  usuario Usuario @relation(fields: [idUsuario], references: [id])
+  curso   Curso   @relation(fields: [idCurso], references: [id])
+}
+
+model Trilha {
+  id          Int     @id @default(autoincrement())
+  titulo      String
+  descricao   String?
+  idCategoria Int
+
+  categoria    Categoria     @relation(fields: [idCategoria], references: [id])
+  cursos       TrilhaCurso[]
+  certificados Certificado[]
+}
+
+model TrilhaCurso {
+  ordem    Int
+  idTrilha Int
+  idCurso  Int
+
+  trilha Trilha @relation(fields: [idTrilha], references: [id])
+  curso  Curso  @relation(fields: [idCurso], references: [id])
+
+  @@id([idTrilha, idCurso])
+}
+
+model Certificado {
+  id                Int      @id @default(autoincrement())
+  codigoVerificacao String   @unique
+  dataEmissao       DateTime @default(now())
+  idUsuario         Int
+  idCurso           Int
+  idTrilha          Int?
+
+  usuario Usuario @relation(fields: [idUsuario], references: [id])
+  curso   Curso   @relation(fields: [idCurso], references: [id])
+  trilha  Trilha? @relation(fields: [idTrilha], references: [id])
+}
+
+model Plano {
+  id           Int    @id @default(autoincrement())
+  nome         String
+  descricao    String?
+  preco        Decimal
+  duracaoMeses Int
+
+  assinaturas Assinatura[]
+}
+
+model Assinatura {
+  id         Int      @id @default(autoincrement())
+  dataInicio DateTime @default(now())
+  dataFim    DateTime
+  idUsuario  Int
+  idPlano    Int
+
+  usuario   Usuario    @relation(fields: [idUsuario], references: [id])
+  plano     Plano      @relation(fields: [idPlano], references: [id])
+  pagamentos Pagamento[]
+}
+
+model Pagamento {
+  id                  Int      @id @default(autoincrement())
+  valorPago           Decimal
+  dataPagamento       DateTime @default(now())
+  metodoPagamento     String
+  idTransacaoGateway  String
+  idAssinatura        Int
+
+  assinatura Assinatura @relation(fields: [idAssinatura], references: [id])
+}
