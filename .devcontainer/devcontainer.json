@@ -1,0 +1,13 @@
+{
+  "forwardPorts": [3000, 5173],
+  "portsAttributes": {
+    "3000": {
+      "label": "Backend API",
+      "visibility": "public"
+    },
+    "5173": {
+      "label": "Frontend React",
+      "visibility": "public"
+    }
+  }
+}
