@@ -14,10 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssinaturasController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
+const passport_1 = require("@nestjs/passport");
 const assinaturas_service_1 = require("./assinaturas.service");
 const create_assinatura_dto_1 = require("./dto/create-assinatura.dto");
 const update_assinatura_dto_1 = require("./dto/update-assinatura.dto");
-const swagger_1 = require("@nestjs/swagger");
 let AssinaturasController = class AssinaturasController {
     assinaturasService;
     constructor(assinaturasService) {
@@ -42,8 +43,6 @@ let AssinaturasController = class AssinaturasController {
 exports.AssinaturasController = AssinaturasController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar uma nova assinatura' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Criado com sucesso.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_assinatura_dto_1.CreateAssinaturaDto]),
@@ -51,16 +50,12 @@ __decorate([
 ], AssinaturasController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar todas as assinaturas' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista retornada com sucesso.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AssinaturasController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Buscar uma assinatura pelo ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Registro encontrado.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -68,8 +63,6 @@ __decorate([
 ], AssinaturasController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Atualizar uma assinatura' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Atualizado com sucesso.' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -78,8 +71,6 @@ __decorate([
 ], AssinaturasController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Remover uma assinatura' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Removido com sucesso.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -87,6 +78,8 @@ __decorate([
 ], AssinaturasController.prototype, "remove", null);
 exports.AssinaturasController = AssinaturasController = __decorate([
     (0, swagger_1.ApiTags)('assinaturas'),
+    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Controller)('assinaturas'),
     __metadata("design:paramtypes", [assinaturas_service_1.AssinaturasService])
 ], AssinaturasController);

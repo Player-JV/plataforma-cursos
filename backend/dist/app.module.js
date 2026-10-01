@@ -21,12 +21,13 @@ const trilhas_module_1 = require("./trilhas/trilhas.module");
 const planos_module_1 = require("./planos/planos.module");
 const assinaturas_module_1 = require("./assinaturas/assinaturas.module");
 const pagamentos_module_1 = require("./pagamentos/pagamentos.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule, usuarios_module_1.UsuariosModule, categorias_module_1.CategoriasModule, cursos_module_1.CursosModule, modulos_module_1.ModulosModule, aulas_module_1.AulasModule, matriculas_module_1.MatriculasModule, trilhas_module_1.TrilhasModule, planos_module_1.PlanosModule, assinaturas_module_1.AssinaturasModule, pagamentos_module_1.PagamentosModule],
+        imports: [prisma_module_1.PrismaModule, usuarios_module_1.UsuariosModule, categorias_module_1.CategoriasModule, cursos_module_1.CursosModule, modulos_module_1.ModulosModule, aulas_module_1.AulasModule, matriculas_module_1.MatriculasModule, trilhas_module_1.TrilhasModule, planos_module_1.PlanosModule, assinaturas_module_1.AssinaturasModule, pagamentos_module_1.PagamentosModule, auth_module_1.AuthModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

@@ -14,10 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatriculasController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
+const passport_1 = require("@nestjs/passport");
 const matriculas_service_1 = require("./matriculas.service");
 const create_matricula_dto_1 = require("./dto/create-matricula.dto");
 const update_matricula_dto_1 = require("./dto/update-matricula.dto");
-const swagger_1 = require("@nestjs/swagger");
 let MatriculasController = class MatriculasController {
     matriculasService;
     constructor(matriculasService) {
@@ -42,8 +43,6 @@ let MatriculasController = class MatriculasController {
 exports.MatriculasController = MatriculasController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar uma nova matrícula' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Criado com sucesso.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_matricula_dto_1.CreateMatriculaDto]),
@@ -51,16 +50,12 @@ __decorate([
 ], MatriculasController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar todas as matrículas' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Lista retornada com sucesso.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MatriculasController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Buscar uma matrícula pelo ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Registro encontrado.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -68,8 +63,6 @@ __decorate([
 ], MatriculasController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Atualizar uma matrícula' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Atualizado com sucesso.' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -78,8 +71,6 @@ __decorate([
 ], MatriculasController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Remover uma matrícula' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Removido com sucesso.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -87,6 +78,8 @@ __decorate([
 ], MatriculasController.prototype, "remove", null);
 exports.MatriculasController = MatriculasController = __decorate([
     (0, swagger_1.ApiTags)('matriculas'),
+    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Controller)('matriculas'),
     __metadata("design:paramtypes", [matriculas_service_1.MatriculasService])
 ], MatriculasController);

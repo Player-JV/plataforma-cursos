@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModulosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const passport_1 = require("@nestjs/passport");
 const modulos_service_1 = require("./modulos.service");
 const create_modulo_dto_1 = require("./dto/create-modulo.dto");
 const update_modulo_dto_1 = require("./dto/update-modulo.dto");
@@ -42,8 +43,6 @@ let ModulosController = class ModulosController {
 exports.ModulosController = ModulosController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar um novo módulo' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Módulo criado com sucesso.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_modulo_dto_1.CreateModuloDto]),
@@ -51,14 +50,12 @@ __decorate([
 ], ModulosController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar todos os módulos' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ModulosController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Buscar módulo por ID' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -66,7 +63,6 @@ __decorate([
 ], ModulosController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Atualizar módulo' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -75,7 +71,6 @@ __decorate([
 ], ModulosController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Remover módulo' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -83,6 +78,8 @@ __decorate([
 ], ModulosController.prototype, "remove", null);
 exports.ModulosController = ModulosController = __decorate([
     (0, swagger_1.ApiTags)('modulos'),
+    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Controller)('modulos'),
     __metadata("design:paramtypes", [modulos_service_1.ModulosService])
 ], ModulosController);

@@ -13,8 +13,8 @@ export declare class MatriculasService {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         usuario: {
-            nomeCompleto: string;
             email: string;
+            nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
             id: number;
@@ -39,8 +39,8 @@ export declare class MatriculasService {
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__MatriculaClient<({
         usuario: {
-            nomeCompleto: string;
             email: string;
+            nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
             id: number;

@@ -1,41 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { ModulosService } from './modulos.service';
 import { CreateModuloDto } from './dto/create-modulo.dto';
 import { UpdateModuloDto } from './dto/update-modulo.dto';
 
 @ApiTags('modulos')
+@ApiBearerAuth('token')
+@UseGuards(AuthGuard('jwt'))
 @Controller('modulos')
 export class ModulosController {
   constructor(private readonly modulosService: ModulosService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Criar um novo módulo' })
-  @ApiResponse({ status: 201, description: 'Módulo criado com sucesso.' })
   create(@Body() createModuloDto: CreateModuloDto) {
     return this.modulosService.create(createModuloDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar todos os módulos' })
   findAll() {
     return this.modulosService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Buscar módulo por ID' })
   findOne(@Param('id') id: string) {
     return this.modulosService.findOne(+id);
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Atualizar módulo' })
   update(@Param('id') id: string, @Body() updateModuloDto: UpdateModuloDto) {
     return this.modulosService.update(+id, updateModuloDto);
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Remover módulo' })
   remove(@Param('id') id: string) {
     return this.modulosService.remove(+id);
   }

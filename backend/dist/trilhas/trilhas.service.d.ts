@@ -12,8 +12,8 @@ export declare class TrilhasService {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         categoria: {
-            id: number;
             nome: string;
+            id: number;
             descricao: string | null;
         };
     } & {
@@ -24,8 +24,8 @@ export declare class TrilhasService {
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__TrilhaClient<({
         categoria: {
-            id: number;
             nome: string;
+            id: number;
             descricao: string | null;
         };
     } & {

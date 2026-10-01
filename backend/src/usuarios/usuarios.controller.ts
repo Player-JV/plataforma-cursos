@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -10,32 +11,34 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Criar um novo usuário' })
-  @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuariosService.create(createUsuarioDto);
   }
 
+  @ApiBearerAuth('token')
+  @UseGuards(AuthGuard('jwt'))
   @Get()
-  @ApiOperation({ summary: 'Listar todos os usuários' })
   findAll() {
     return this.usuariosService.findAll();
   }
 
+  @ApiBearerAuth('token')
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
-  @ApiOperation({ summary: 'Buscar usuário por ID' })
   findOne(@Param('id') id: string) {
     return this.usuariosService.findOne(+id);
   }
 
+  @ApiBearerAuth('token')
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
-  @ApiOperation({ summary: 'Atualizar usuário' })
   update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuariosService.update(+id, updateUsuarioDto);
   }
 
+  @ApiBearerAuth('token')
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
-  @ApiOperation({ summary: 'Remover usuário' })
   remove(@Param('id') id: string) {
     return this.usuariosService.remove(+id);
   }

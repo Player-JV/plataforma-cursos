@@ -17,13 +17,13 @@ export declare class CursosService {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         categoria: {
-            id: number;
             nome: string;
+            id: number;
             descricao: string | null;
         };
         instrutor: {
-            nomeCompleto: string;
             email: string;
+            nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
             id: number;
@@ -41,13 +41,13 @@ export declare class CursosService {
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__CursoClient<({
         categoria: {
-            id: number;
             nome: string;
+            id: number;
             descricao: string | null;
         };
         instrutor: {
-            nomeCompleto: string;
             email: string;
+            nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
             id: number;

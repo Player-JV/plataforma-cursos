@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CursosController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
+const passport_1 = require("@nestjs/passport");
 const cursos_service_1 = require("./cursos.service");
 const create_curso_dto_1 = require("./dto/create-curso.dto");
 const update_curso_dto_1 = require("./dto/update-curso.dto");
@@ -42,8 +43,6 @@ let CursosController = class CursosController {
 exports.CursosController = CursosController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar um novo curso' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Curso criado com sucesso.' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_curso_dto_1.CreateCursoDto]),
@@ -51,14 +50,12 @@ __decorate([
 ], CursosController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar todos os cursos' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CursosController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Buscar curso por ID' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -66,7 +63,6 @@ __decorate([
 ], CursosController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Atualizar curso' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -75,7 +71,6 @@ __decorate([
 ], CursosController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Remover curso' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -83,6 +78,8 @@ __decorate([
 ], CursosController.prototype, "remove", null);
 exports.CursosController = CursosController = __decorate([
     (0, swagger_1.ApiTags)('cursos'),
+    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Controller)('cursos'),
     __metadata("design:paramtypes", [cursos_service_1.CursosService])
 ], CursosController);

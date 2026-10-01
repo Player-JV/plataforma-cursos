@@ -19,6 +19,7 @@ exports.UsuariosModule = UsuariosModule = __decorate([
         imports: [prisma_module_1.PrismaModule],
         controllers: [usuarios_controller_1.UsuariosController],
         providers: [usuarios_service_1.UsuariosService],
+        exports: [usuarios_service_1.UsuariosService],
     })
 ], UsuariosModule);
 //# sourceMappingURL=usuarios.module.js.map

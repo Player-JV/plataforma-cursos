@@ -11,28 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUsuarioDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const class_validator_1 = require("class-validator");
 class CreateUsuarioDto {
-    nomeCompleto;
+    nome;
     email;
-    senhaHash;
+    senha;
 }
 exports.CreateUsuarioDto = CreateUsuarioDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'João Victor', description: 'Nome completo do usuário' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], CreateUsuarioDto.prototype, "nomeCompleto", void 0);
+], CreateUsuarioDto.prototype, "nome", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'joao@email.com', description: 'Email do usuário' }),
-    (0, class_validator_1.IsEmail)(),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
 ], CreateUsuarioDto.prototype, "email", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'senha123', description: 'Senha com no mínimo 6 caracteres' }),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MinLength)(6),
+    (0, swagger_1.ApiProperty)(),
     __metadata("design:type", String)
-], CreateUsuarioDto.prototype, "senhaHash", void 0);
+], CreateUsuarioDto.prototype, "senha", void 0);
 //# sourceMappingURL=create-usuario.dto.js.map

@@ -5,28 +5,28 @@ export declare class CategoriasService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createCategoriaDto: CreateCategoriaDto): import(".prisma/client").Prisma.Prisma__CategoriaClient<{
-        id: number;
         nome: string;
+        id: number;
         descricao: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<{
-        id: number;
         nome: string;
+        id: number;
         descricao: string | null;
     }[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__CategoriaClient<{
-        id: number;
         nome: string;
+        id: number;
         descricao: string | null;
     } | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, updateCategoriaDto: UpdateCategoriaDto): import(".prisma/client").Prisma.Prisma__CategoriaClient<{
-        id: number;
         nome: string;
+        id: number;
         descricao: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__CategoriaClient<{
-        id: number;
         nome: string;
+        id: number;
         descricao: string | null;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }
