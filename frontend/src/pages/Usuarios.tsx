@@ -41,13 +41,28 @@ export default function Usuarios() {
     setModal(true);
   }
 
-  async function salvar(e: React.FormEvent) {
+async function salvar(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setErro(null);
     try {
-      if (editId) await usuarioService.atualizar(editId, form);
-      else await usuarioService.criar(form);
+      // 1. Preparamos os dados comuns a ambas as ações
+      const dadosParaEnviar: any = {
+        email: form.email,
+      };
+
+      if (form.senhaHash && form.senhaHash.trim() !== '') {
+        dadosParaEnviar.senha = form.senhaHash;
+      }
+
+      if (editId) {
+        dadosParaEnviar.nomeCompleto = form.nomeCompleto;
+        await usuarioService.atualizar(editId, dadosParaEnviar);
+      } else {
+        dadosParaEnviar.nome = form.nomeCompleto;
+        await usuarioService.criar(dadosParaEnviar);
+      }
+      
       setModal(false);
       carregar();
     } catch (error) {
@@ -56,7 +71,6 @@ export default function Usuarios() {
       setLoading(false);
     }
   }
-
   async function excluir(id: number) {
     if (!window.confirm('Deseja realmente excluir?')) return;
     setLoading(true);

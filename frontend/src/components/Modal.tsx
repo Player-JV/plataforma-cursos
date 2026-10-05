@@ -1,30 +1,31 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-interface Props {
-  titulo: string;
-  onSalvar: () => void;
-  onFechar: () => void;
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
   children: ReactNode;
 }
 
-function Modal({ titulo, onSalvar, onFechar, children }: Props) {
+export default function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  if (!isOpen) return null;
+
   return (
-    <div className="modal fade show d-block" tabIndex={-1} style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-      <div className="modal-dialog modal-lg">
+    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex={-1}>
+      <div className="modal-dialog">
         <div className="modal-content">
-          <div className="modal-header bg-primary text-white">
-            <h5 className="modal-title">{titulo}</h5>
-            <button type="button" className="btn-close btn-close-white" onClick={onFechar} />
+          <div className="modal-header">
+            <h5 className="modal-title">{title}</h5>
+            {/* O X superior recebe o onClick={onClose} */}
+            <button type="button" className="btn-close" aria-label="Close" onClick={onClose}></button>
           </div>
-          <div className="modal-body">{children}</div>
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={onFechar}>Cancelar</button>
-            <button className="btn btn-primary" onClick={onSalvar}>Salvar</button>
+          <div className="modal-body">
+            {children}
           </div>
+          {/* Se quiser um botão Cancelar padrão do Modal, coloque aqui. 
+              Como o seu formulário já tem botões, muitas vezes deixamos o footer vazio ou o removemos */}
         </div>
       </div>
     </div>
   );
 }
-
-export default Modal;

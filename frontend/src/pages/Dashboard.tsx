@@ -1,10 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- Adicionado para o redirecionamento
 import { usuarioService, cursoService, categoriaService, matriculaService } from '../services/services';
 
 function Dashboard() {
   const [totais, setTotais] = useState({ cursos: 0, categorias: 0, usuarios: 0, matriculas: 0 });
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
+  
+  const navigate = useNavigate(); // <-- Inicializado o hook de navegação
+
+  // <-- Lógica de Logout adicionada
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('tipoUsuario');
+    navigate('/login');
+  };
 
   useEffect(() => {
     async function carregar() {
@@ -42,7 +52,12 @@ function Dashboard() {
 
   return (
     <div>
-      <h2 className="mb-4">📊 Dashboard</h2>
+      {/* <-- Cabeçalho modificado para ter o título à esquerda e o botão à direita */}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2 className="mb-0">📊 Dashboard</h2>
+        <button className="btn btn-danger" onClick={handleLogout}>Sair da Conta</button>
+      </div>
+
       {loading && <div className="text-center py-4"><div className="spinner-border text-primary" /><p className="mt-2 text-muted">Carregando...</p></div>}
       {erro && !loading && <div className="alert alert-danger">{erro}</div>}
       {!loading && !erro && (

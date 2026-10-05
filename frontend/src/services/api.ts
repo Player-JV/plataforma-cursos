@@ -1,13 +1,31 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://verbose-chainsaw-g45wpv9g6q973vg99-3000.app.github.dev',
+  baseURL: 'https://friendly-cod-69r7px6j5q643xr6g-3000.app.github.dev',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Interceptor para ajudar no debug (mostra no console se der erro)
+// Intercetor de pedido: adiciona o token JWT antes de comunicar com o backend
+api.interceptors.request.use(
+  (config) => {
+    // Procura o token guardado no navegador após o login
+    const token = localStorage.getItem('token');
+    
+    // Se o token existir, injeta-o no cabeçalho de Autorização
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Intercetor de resposta: ajuda no debug (mostra no console se der erro)
 api.interceptors.response.use(
   (response) => response,
   (error) => {

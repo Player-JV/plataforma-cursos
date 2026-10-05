@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 
 const itens = [
-  { path: '/', label: '📊 Dashboard' },
+  { path: '/dashboard', label: '📊 Dashboard' }, // <-- Alterado de '/' para '/dashboard'
   { path: '/categorias', label: '📚 Categorias' },
   { path: '/cursos', label: '🎓 Cursos' },
   { path: '/modulos', label: '📦 Módulos' },
@@ -18,7 +18,8 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid">
-        <Link className="navbar-brand fw-bold" to="/">🎓 Academia Online</Link>
+        {/* A logo também foi alterada para ir para o '/dashboard' */}
+        <Link className="navbar-brand fw-bold" to="/dashboard">🎓 Academia Online</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
           <span className="navbar-toggler-icon" />
         </button>
