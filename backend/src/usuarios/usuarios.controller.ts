@@ -15,28 +15,28 @@ export class UsuariosController {
     return this.usuariosService.create(createUsuarioDto);
   }
 
-  @ApiBearerAuth('token')
+  @ApiBearerAuth() // <-- Sem a palavra 'token', usa o padrão do Swagger!
   @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll() {
     return this.usuariosService.findAll();
   }
 
-  @ApiBearerAuth('token')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usuariosService.findOne(+id);
   }
 
-  @ApiBearerAuth('token')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuariosService.update(+id, updateUsuarioDto);
   }
 
-  @ApiBearerAuth('token')
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   remove(@Param('id') id: string) {

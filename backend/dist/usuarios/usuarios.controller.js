@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuariosController.prototype, "create", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuariosController.prototype, "findAll", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -66,7 +66,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuariosController.prototype, "findOne", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuariosController.prototype, "update", null);
 __decorate([
-    (0, swagger_1.ApiBearerAuth)('token'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
