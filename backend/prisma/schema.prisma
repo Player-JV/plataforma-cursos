@@ -16,12 +16,13 @@ model Usuario {
   senhaHash    String
   dataCadastro DateTime @default(now())
 
-  cursos      Curso[]
-  matriculas  Matricula[]
-  progressos  ProgressoAula[]
-  avaliacoes  Avaliacao[]
-  assinaturas Assinatura[]
+  cursos       Curso[]
+  matriculas   Matricula[]
+  progressos   ProgressoAula[]
+  avaliacoes   Avaliacao[]
+  assinaturas  Assinatura[]
   certificados Certificado[]
+  notificacoes Notificacao[]
 }
 
 model Categoria {
@@ -178,4 +179,16 @@ model Pagamento {
   idAssinatura        Int
 
   assinatura Assinatura @relation(fields: [idAssinatura], references: [id])
+}
+
+model Notificacao {
+  id        Int      @id @default(autoincrement())
+  titulo    String
+  mensagem  String
+  tipo      String   @default("SISTEMA")
+  lida      Boolean  @default(false)
+  criadaEm  DateTime @default(now())
+  idUsuario Int?
+
+  usuario Usuario? @relation(fields: [idUsuario], references: [id])
 }

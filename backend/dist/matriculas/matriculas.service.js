@@ -12,17 +12,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MatriculasService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const notificacoes_service_1 = require("../notificacoes/notificacoes.service");
 let MatriculasService = class MatriculasService {
     prisma;
-    constructor(prisma) {
+    notificacoesService;
+    constructor(prisma, notificacoesService) {
         this.prisma = prisma;
+        this.notificacoesService = notificacoesService;
     }
-    create(createMatriculaDto) {
-        return this.prisma.matricula.create({ data: createMatriculaDto });
+    async create(createMatriculaDto) {
+        const matricula = await this.prisma.matricula.create({
+            data: createMatriculaDto,
+            include: { curso: true },
+        });
+        await this.notificacoesService.emitirEvento('matricula-criada', {
+            idUsuario: matricula.idUsuario,
+            idCurso: matricula.idCurso,
+            tituloCurso: matricula.curso.titulo,
+        });
+        return matricula;
     }
     findAll() {
         return this.prisma.matricula.findMany({
-            include: { usuario: true, curso: true },
+            include: {
+                usuario: true,
+                curso: { include: { categoria: true } },
+            },
         });
     }
     findOne(id) {
@@ -44,6 +59,7 @@ let MatriculasService = class MatriculasService {
 exports.MatriculasService = MatriculasService;
 exports.MatriculasService = MatriculasService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        notificacoes_service_1.NotificacoesService])
 ], MatriculasService);
 //# sourceMappingURL=matriculas.service.js.map

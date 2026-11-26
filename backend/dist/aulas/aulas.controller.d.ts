@@ -5,8 +5,8 @@ export declare class AulasController {
     private readonly aulasService;
     constructor(aulasService: AulasService);
     create(createAulaDto: CreateAulaDto): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -15,14 +15,14 @@ export declare class AulasController {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         modulo: {
-            id: number;
             titulo: string;
-            ordem: number;
+            id: number;
             idCurso: number;
+            ordem: number;
         };
     } & {
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -31,14 +31,14 @@ export declare class AulasController {
     })[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__AulaClient<({
         modulo: {
-            id: number;
             titulo: string;
-            ordem: number;
+            id: number;
             idCurso: number;
+            ordem: number;
         };
     } & {
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -46,8 +46,8 @@ export declare class AulasController {
         idModulo: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateAulaDto: UpdateAulaDto): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -55,8 +55,8 @@ export declare class AulasController {
         idModulo: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;

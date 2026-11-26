@@ -11,5 +11,10 @@ export declare class AuthService {
     constructor(usuariosService: UsuariosService, jwtService: JwtService);
     login(loginDto: LoginDto): Promise<{
         access_token: string;
+        usuario: {
+            id: number;
+            nomeCompleto: string;
+            email: string;
+        };
     }>;
 }

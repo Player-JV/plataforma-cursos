@@ -12,13 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CursosService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const notificacoes_service_1 = require("../notificacoes/notificacoes.service");
 let CursosService = class CursosService {
     prisma;
-    constructor(prisma) {
+    notificacoesService;
+    constructor(prisma, notificacoesService) {
         this.prisma = prisma;
+        this.notificacoesService = notificacoesService;
     }
-    create(createCursoDto) {
-        return this.prisma.curso.create({ data: createCursoDto });
+    async create(createCursoDto) {
+        const curso = await this.prisma.curso.create({ data: createCursoDto });
+        await this.notificacoesService.emitirEvento('curso-criado', {
+            idCurso: curso.id,
+            titulo: curso.titulo,
+        });
+        return curso;
     }
     findAll() {
         return this.prisma.curso.findMany({
@@ -28,7 +36,16 @@ let CursosService = class CursosService {
     findOne(id) {
         return this.prisma.curso.findUnique({
             where: { id },
-            include: { categoria: true, instrutor: true, modulos: true },
+            include: {
+                categoria: true,
+                instrutor: true,
+                modulos: {
+                    orderBy: { ordem: 'asc' },
+                    include: {
+                        aulas: { orderBy: { ordem: 'asc' } },
+                    },
+                },
+            },
         });
     }
     update(id, updateCursoDto) {
@@ -44,6 +61,7 @@ let CursosService = class CursosService {
 exports.CursosService = CursosService;
 exports.CursosService = CursosService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        notificacoes_service_1.NotificacoesService])
 ], CursosService);
 //# sourceMappingURL=cursos.service.js.map

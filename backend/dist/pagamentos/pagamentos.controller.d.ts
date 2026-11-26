@@ -4,14 +4,22 @@ import { UpdatePagamentoDto } from './dto/update-pagamento.dto';
 export declare class PagamentosController {
     private readonly pagamentosService;
     constructor(pagamentosService: PagamentosService);
-    create(createPagamentoDto: CreatePagamentoDto): import(".prisma/client").Prisma.Prisma__PagamentoClient<{
+    create(createPagamentoDto: CreatePagamentoDto): Promise<{
+        assinatura: {
+            id: number;
+            idUsuario: number;
+            idPlano: number;
+            dataFim: Date;
+            dataInicio: Date;
+        };
+    } & {
         id: number;
         valorPago: import("@prisma/client/runtime/library").Decimal;
         metodoPagamento: string;
         idTransacaoGateway: string;
         idAssinatura: number;
         dataPagamento: Date;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         assinatura: {
             id: number;

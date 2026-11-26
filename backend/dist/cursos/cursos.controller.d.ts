@@ -4,34 +4,34 @@ import { UpdateCursoDto } from './dto/update-curso.dto';
 export declare class CursosController {
     private readonly cursosService;
     constructor(cursosService: CursosService);
-    create(createCursoDto: CreateCursoDto): import(".prisma/client").Prisma.Prisma__CursoClient<{
+    create(createCursoDto: CreateCursoDto): Promise<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         nivel: string;
         totalAulas: number;
         totalHoras: number;
         idInstrutor: number;
         idCategoria: number;
         dataPublicacao: Date;
-    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+    }>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         categoria: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
         };
         instrutor: {
+            id: number;
             email: string;
             nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
-            id: number;
         };
     } & {
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         nivel: string;
         totalAulas: number;
         totalHoras: number;
@@ -41,27 +41,37 @@ export declare class CursosController {
     })[]>;
     findOne(id: string): import(".prisma/client").Prisma.Prisma__CursoClient<({
         categoria: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
         };
         instrutor: {
+            id: number;
             email: string;
             nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
-            id: number;
         };
-        modulos: {
-            id: number;
+        modulos: ({
+            aulas: {
+                titulo: string;
+                id: number;
+                ordem: number;
+                tipoConteudo: string;
+                urlConteudo: string | null;
+                duracaoMinutos: number;
+                idModulo: number;
+            }[];
+        } & {
             titulo: string;
-            ordem: number;
+            id: number;
             idCurso: number;
-        }[];
+            ordem: number;
+        })[];
     } & {
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         nivel: string;
         totalAulas: number;
         totalHoras: number;
@@ -70,9 +80,9 @@ export declare class CursosController {
         dataPublicacao: Date;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: string, updateCursoDto: UpdateCursoDto): import(".prisma/client").Prisma.Prisma__CursoClient<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         nivel: string;
         totalAulas: number;
         totalHoras: number;
@@ -81,9 +91,9 @@ export declare class CursosController {
         dataPublicacao: Date;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: string): import(".prisma/client").Prisma.Prisma__CursoClient<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         nivel: string;
         totalAulas: number;
         totalHoras: number;

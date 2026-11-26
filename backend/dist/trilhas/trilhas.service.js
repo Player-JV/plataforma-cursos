@@ -22,13 +22,25 @@ let TrilhasService = class TrilhasService {
     }
     findAll() {
         return this.prisma.trilha.findMany({
-            include: { categoria: true },
+            include: {
+                categoria: true,
+                cursos: {
+                    orderBy: { ordem: 'asc' },
+                    include: { curso: true },
+                },
+            },
         });
     }
     findOne(id) {
         return this.prisma.trilha.findUnique({
             where: { id },
-            include: { categoria: true },
+            include: {
+                categoria: true,
+                cursos: {
+                    orderBy: { ordem: 'asc' },
+                    include: { curso: true },
+                },
+            },
         });
     }
     update(id, updateTrilhaDto) {

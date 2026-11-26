@@ -2,13 +2,29 @@ import { Injectable } from '@nestjs/common';
 import { CreatePagamentoDto } from './dto/create-pagamento.dto';
 import { UpdatePagamentoDto } from './dto/update-pagamento.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { NotificacoesService } from '../notificacoes/notificacoes.service';
 
 @Injectable()
 export class PagamentosService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificacoesService: NotificacoesService,
+  ) {}
 
-  create(createPagamentoDto: CreatePagamentoDto) {
-    return this.prisma.pagamento.create({ data: createPagamentoDto });
+  async create(createPagamentoDto: CreatePagamentoDto) {
+    const pagamento = await this.prisma.pagamento.create({
+      data: createPagamentoDto,
+      include: { assinatura: true },
+    });
+
+    // Publica no Kafka para confirmar o pagamento no celular
+    await this.notificacoesService.emitirEvento('pagamento-aprovado', {
+      idUsuario: pagamento.assinatura.idUsuario,
+      valorPago: Number(pagamento.valorPago).toFixed(2),
+      metodoPagamento: pagamento.metodoPagamento,
+    });
+
+    return pagamento;
   }
 
   findAll() {

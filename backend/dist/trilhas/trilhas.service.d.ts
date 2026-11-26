@@ -5,45 +5,79 @@ export declare class TrilhasService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createTrilhaDto: CreateTrilhaDto): import(".prisma/client").Prisma.Prisma__TrilhaClient<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         idCategoria: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         categoria: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
         };
+        cursos: ({
+            curso: {
+                titulo: string;
+                id: number;
+                descricao: string | null;
+                nivel: string;
+                totalAulas: number;
+                totalHoras: number;
+                idInstrutor: number;
+                idCategoria: number;
+                dataPublicacao: Date;
+            };
+        } & {
+            idCurso: number;
+            ordem: number;
+            idTrilha: number;
+        })[];
     } & {
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         idCategoria: number;
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__TrilhaClient<({
         categoria: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
         };
+        cursos: ({
+            curso: {
+                titulo: string;
+                id: number;
+                descricao: string | null;
+                nivel: string;
+                totalAulas: number;
+                totalHoras: number;
+                idInstrutor: number;
+                idCategoria: number;
+                dataPublicacao: Date;
+            };
+        } & {
+            idCurso: number;
+            ordem: number;
+            idTrilha: number;
+        })[];
     } & {
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         idCategoria: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, updateTrilhaDto: UpdateTrilhaDto): import(".prisma/client").Prisma.Prisma__TrilhaClient<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         idCategoria: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__TrilhaClient<{
+        titulo: string;
         id: number;
         descricao: string | null;
-        titulo: string;
         idCategoria: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
 }

@@ -16,7 +16,6 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const user = await this.usuariosService.findByEmail(loginDto.email);
 
-  
     if (!user || !(await bcrypt.compare(loginDto.password, user.senhaHash))) {
       throw new UnauthorizedException('E-mail ou senha incorretos');
     }
@@ -25,6 +24,11 @@ export class AuthService {
 
     return {
       access_token: this.jwtService.sign(payload),
+      usuario: {
+        id: user.id,
+        nomeCompleto: user.nomeCompleto,
+        email: user.email,
+      },
     };
   }
 }

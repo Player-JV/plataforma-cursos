@@ -5,8 +5,8 @@ export declare class AulasService {
     private prisma;
     constructor(prisma: PrismaService);
     create(createAulaDto: CreateAulaDto): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -15,14 +15,14 @@ export declare class AulasService {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         modulo: {
-            id: number;
             titulo: string;
-            ordem: number;
+            id: number;
             idCurso: number;
+            ordem: number;
         };
     } & {
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -31,14 +31,14 @@ export declare class AulasService {
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__AulaClient<({
         modulo: {
-            id: number;
             titulo: string;
-            ordem: number;
+            id: number;
             idCurso: number;
+            ordem: number;
         };
     } & {
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -46,8 +46,8 @@ export declare class AulasService {
         idModulo: number;
     }) | null, null, import("@prisma/client/runtime/library").DefaultArgs>;
     update(id: number, updateAulaDto: UpdateAulaDto): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;
@@ -55,8 +55,8 @@ export declare class AulasService {
         idModulo: number;
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     remove(id: number): import(".prisma/client").Prisma.Prisma__AulaClient<{
-        id: number;
         titulo: string;
+        id: number;
         ordem: number;
         tipoConteudo: string;
         urlConteudo: string | null;

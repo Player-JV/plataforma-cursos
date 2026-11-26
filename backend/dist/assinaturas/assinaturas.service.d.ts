@@ -13,15 +13,15 @@ export declare class AssinaturasService {
     }, never, import("@prisma/client/runtime/library").DefaultArgs>;
     findAll(): import(".prisma/client").Prisma.PrismaPromise<({
         usuario: {
+            id: number;
             email: string;
             nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
-            id: number;
         };
         plano: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
             preco: import("@prisma/client/runtime/library").Decimal;
             duracaoMeses: number;
@@ -35,15 +35,15 @@ export declare class AssinaturasService {
     })[]>;
     findOne(id: number): import(".prisma/client").Prisma.Prisma__AssinaturaClient<({
         usuario: {
+            id: number;
             email: string;
             nomeCompleto: string;
             senhaHash: string;
             dataCadastro: Date;
-            id: number;
         };
         plano: {
-            nome: string;
             id: number;
+            nome: string;
             descricao: string | null;
             preco: import("@prisma/client/runtime/library").Decimal;
             duracaoMeses: number;

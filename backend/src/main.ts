@@ -1,27 +1,40 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // 1. Ativa o CORS: Permite que o teu frontend (React) consiga fazer pedidos a este backend
   app.enableCors();
 
-  // 2. Configuração do Swagger (Documentação e testes da API)
+  // Conecta o Consumer do Kafka dentro do mesmo backend NestJS
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        brokers: ['localhost:9092'],
+      },
+      consumer: {
+        groupId: 'notificacoes-consumer',
+      },
+    },
+  });
+
   const config = new DocumentBuilder()
     .setTitle('API Plataforma de Cursos')
-    .setDescription('Documentação da API com proteção JWT')
+    .setDescription('Documentação da API com proteção JWT e Kafka')
     .setVersion('1.0')
-    .addBearerAuth() // Garante que o botão "Authorize" continua a aparecer no Swagger
+    .addBearerAuth(
+  { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+  'token',
+)
     .build();
-    
+
   const document = SwaggerModule.createDocument(app, config);
-  
-  // Define que o Swagger vai abrir na rota /api
   SwaggerModule.setup('api', app, document);
 
-  // 3. Inicia o servidor na porta 3000
+  await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();

@@ -12,13 +12,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PagamentosService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const notificacoes_service_1 = require("../notificacoes/notificacoes.service");
 let PagamentosService = class PagamentosService {
     prisma;
-    constructor(prisma) {
+    notificacoesService;
+    constructor(prisma, notificacoesService) {
         this.prisma = prisma;
+        this.notificacoesService = notificacoesService;
     }
-    create(createPagamentoDto) {
-        return this.prisma.pagamento.create({ data: createPagamentoDto });
+    async create(createPagamentoDto) {
+        const pagamento = await this.prisma.pagamento.create({
+            data: createPagamentoDto,
+            include: { assinatura: true },
+        });
+        await this.notificacoesService.emitirEvento('pagamento-aprovado', {
+            idUsuario: pagamento.assinatura.idUsuario,
+            valorPago: Number(pagamento.valorPago).toFixed(2),
+            metodoPagamento: pagamento.metodoPagamento,
+        });
+        return pagamento;
     }
     findAll() {
         return this.prisma.pagamento.findMany({
@@ -44,6 +56,7 @@ let PagamentosService = class PagamentosService {
 exports.PagamentosService = PagamentosService;
 exports.PagamentosService = PagamentosService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        notificacoes_service_1.NotificacoesService])
 ], PagamentosService);
 //# sourceMappingURL=pagamentos.service.js.map

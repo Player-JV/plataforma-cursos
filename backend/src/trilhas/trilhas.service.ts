@@ -13,14 +13,26 @@ export class TrilhasService {
 
   findAll() {
     return this.prisma.trilha.findMany({
-      include: { categoria: true },
+      include: {
+        categoria: true,
+        cursos: {
+          orderBy: { ordem: 'asc' },
+          include: { curso: true },
+        },
+      },
     });
   }
 
   findOne(id: number) {
     return this.prisma.trilha.findUnique({
       where: { id },
-      include: { categoria: true },
+      include: {
+        categoria: true,
+        cursos: {
+          orderBy: { ordem: 'asc' },
+          include: { curso: true },
+        },
+      },
     });
   }
 
